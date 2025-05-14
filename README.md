@@ -1,6 +1,6 @@
 # **Niped Challenge**
 
-In the Data folder of this repository you will find a JSON file with client data alongside a JSON file with information on medical guidelines.
+In the Data folder of this repository you will find two JSON files, medical guidelines and client medical data with values that are referenced in the guidelines.
 
 **Create a system to return a report for the given clients by combining their medical data with the guidelines.**
 
