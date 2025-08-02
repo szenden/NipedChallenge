@@ -45,9 +45,35 @@ namespace MedicalAssessment.Infrastructure.Repositories
             return client;
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(Client client)
         {
-            _context.Clients.Update(client);
+            var existingClient = await _context.Clients
+                .Include(c => c.Assessments)
+                .FirstOrDefaultAsync(c => c.Id == client.Id);
+                
+            if (existingClient != null)
+            {
+                _context.Entry(existingClient).CurrentValues.SetValues(client);
+                // Add new assessments
+                foreach (var assessment in client.Assessments)
+                {
+                    if (!existingClient.Assessments.Any(a => a.Id == assessment.Id))
+                    {
+                        _context.Assessments.Add(assessment);
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddAssessmentAsync(Assessment assessment)
+        {
+            _context.Assessments.Add(assessment);
             await _context.SaveChangesAsync();
         }
     }
