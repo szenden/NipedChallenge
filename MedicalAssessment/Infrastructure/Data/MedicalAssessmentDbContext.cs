@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MedicalAssessment.Domain.Entities;
 
 namespace MedicalAssessment.Infrastructure.Data
 {

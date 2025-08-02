@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MedicalAssessment.Application.DTOs;
+using MedicalAssessment.Application.Interfaces;
 
 namespace MedicalAssessment.API.Controllers
 {

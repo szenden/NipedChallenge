@@ -1,3 +1,5 @@
+using MedicalAssessment.Domain.ValueObjects;
+
 namespace MedicalAssessment.Application.DTOs
 {
     public record CreateClientRequest(string Name, DateTime DateOfBirth, Gender Gender);
