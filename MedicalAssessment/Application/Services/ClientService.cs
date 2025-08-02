@@ -47,9 +47,10 @@ namespace MedicalAssessment.Application.Services
             if (client == null) return null;
 
             var bloodPressure = new BloodPressure(request.SystolicBP, request.DiastolicBP);
-            var assessment = client.AddAssessment(bloodPressure, request.CholesterolTotal, request.BloodSugar);
+            var assessment = new Assessment(clientId, bloodPressure, request.CholesterolTotal, request.BloodSugar);
             
-            await _clientRepository.UpdateAsync(client);
+            // Add assessment directly to the context instead of through the client
+            await _clientRepository.AddAssessmentAsync(assessment);
 
             var report = _healthAssessmentService.GenerateReport(client, assessment);
             return MapToResponse(report);

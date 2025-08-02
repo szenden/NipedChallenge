@@ -11,5 +11,8 @@ namespace MedicalAssessment.Application.Interfaces
         Task<List<Client>> GetAllAsync();
         Task<Client> AddAsync(Client client);
         Task UpdateAsync(Client client);
+        Task DeleteAsync(Guid id);
+        Task SaveChangesAsync();
+        Task AddAssessmentAsync(Assessment assessment);
     }
 }
