@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using MedicalAssessment.Domain.Entities;
+
 namespace MedicalAssessment.Application.Interfaces
 {
     public interface IClientRepository
