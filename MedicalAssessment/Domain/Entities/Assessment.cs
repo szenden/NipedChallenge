@@ -1,3 +1,6 @@
+using System;
+using MedicalAssessment.Domain.ValueObjects;
+
 namespace MedicalAssessment.Domain.Entities
 {
     public class Assessment

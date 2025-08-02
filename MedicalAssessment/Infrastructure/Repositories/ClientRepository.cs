@@ -1,3 +1,8 @@
+using MedicalAssessment.Application.Interfaces;
+using MedicalAssessment.Domain.Entities;
+using MedicalAssessment.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace MedicalAssessment.Infrastructure.Repositories
 {
     public class ClientRepository : IClientRepository
@@ -21,6 +26,16 @@ namespace MedicalAssessment.Infrastructure.Repositories
             return await _context.Clients
                 .Include(c => c.Assessments)
                 .ToListAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var client = await _context.Clients.FindAsync(id);
+            if (client != null)
+            {
+                _context.Clients.Remove(client);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Client> AddAsync(Client client)
