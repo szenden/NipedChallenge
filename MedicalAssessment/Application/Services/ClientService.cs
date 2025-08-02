@@ -1,13 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MedicalAssessment.Application.DTOs;
+using MedicalAssessment.Application.Interfaces;
+using MedicalAssessment.Domain.Entities;
+using MedicalAssessment.Domain.Services;
+using MedicalAssessment.Domain.ValueObjects;
+
 namespace MedicalAssessment.Application.Services
 {
-    public interface IClientService
-    {
-        Task<ClientResponse> CreateClientAsync(CreateClientRequest request);
-        Task<List<ClientResponse>> GetAllClientsAsync();
-        Task<ClientResponse?> GetClientByIdAsync(Guid id);
-        Task<HealthReportResponse?> CreateAssessmentAndGenerateReportAsync(Guid clientId, CreateAssessmentRequest request);
-    }
-
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
