@@ -1,3 +1,6 @@
+using MedicalAssessment.Domain.Entities;
+using MedicalAssessment.Domain.ValueObjects;
+
 namespace MedicalAssessment.Domain.Services
 {
     public interface IHealthAssessmentService

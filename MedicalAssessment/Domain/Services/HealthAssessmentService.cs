@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+using MedicalAssessment.Domain.Entities;
+using MedicalAssessment.Domain.ValueObjects;
+
 namespace MedicalAssessment.Domain.Services
 {
     public class HealthAssessmentService : IHealthAssessmentService
