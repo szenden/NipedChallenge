@@ -1,0 +1,199 @@
+{
+  "version": "2024.1",
+  "effectiveDate": "2024-01-01T00:00:00Z",
+  "demographics": {
+    "ageGroups": ["18-30", "31-50", "51-70", "70+"],
+    "genders": ["male", "female", "other"]
+  },
+  "metrics": {
+    "TotalCholesterol": {
+      "unit": "mg/dL",
+      "thresholds": {
+        "male": {
+          "18-30": {
+            "optimal": "<200",
+            "borderlinehigh": "200-239",
+            "high": ">=240"
+          },
+          "31-50": {
+            "optimal": "<180",
+            "borderlinehigh": "180-219",
+            "high": ">=220"
+          },
+          "51-70": {
+            "optimal": "<180",
+            "borderlinehigh": "180-219",
+            "high": ">=220"
+          },
+          "70+": {
+            "optimal": "<180",
+            "borderlinehigh": "180-219",
+            "high": ">=220"
+          }
+        },
+        "female": {
+          "18-30": {
+            "optimal": "<200",
+            "borderlinehigh": "200-239",
+            "high": ">=240"
+          },
+          "31-50": {
+            "optimal": "<200",
+            "borderlinehigh": "200-239",
+            "high": ">=240"
+          },
+          "51-70": {
+            "optimal": "<200",
+            "borderlinehigh": "200-239",
+            "high": ">=240"
+          },
+          "70+": {
+            "optimal": "<200",
+            "borderlinehigh": "200-239",
+            "high": ">=240"
+          }
+        }
+      },
+      "recommendations": {
+        "high": [
+          "Consult with a cardiologist",
+          "Consider statin therapy",
+          "Adopt a heart-healthy diet",
+          "Increase physical activity"
+        ],
+        "borderlinehigh": [
+          "Monitor cholesterol levels regularly",
+          "Maintain a healthy diet",
+          "Exercise regularly"
+        ]
+      }
+    },
+    "BloodSugar": {
+      "unit": "mg/dL",
+      "thresholds": {
+        "male": {
+          "18-30": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "31-50": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "51-70": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "70+": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          }
+        },
+        "female": {
+          "18-30": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "31-50": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "51-70": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          },
+          "70+": {
+            "normal": "<100",
+            "borderlinehigh": "100-125",
+            "high": ">=126"
+          }
+        }
+      },
+      "recommendations": {
+        "high": [
+          "Consult with an endocrinologist",
+          "Monitor blood sugar regularly",
+          "Consider diabetes medication",
+          "Follow a diabetic diet plan"
+        ],
+        "borderlinehigh": [
+          "Monitor blood sugar levels",
+          "Reduce sugar intake",
+          "Increase physical activity",
+          "Maintain healthy weight"
+        ]
+      }
+    },
+    "SystolicBP": {
+      "unit": "mmHg",
+      "thresholds": {
+        "male": {
+          "18-30": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "31-50": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "51-70": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "70+": {
+            "normal": "<130",
+            "borderlinehigh": "130-149",
+            "high": ">=150"
+          }
+        },
+        "female": {
+          "18-30": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "31-50": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "51-70": {
+            "normal": "<120",
+            "borderlinehigh": "120-139",
+            "high": ">=140"
+          },
+          "70+": {
+            "normal": "<130",
+            "borderlinehigh": "130-149",
+            "high": ">=150"
+          }
+        }
+      },
+      "recommendations": {
+        "high": [
+          "Consult with a physician immediately",
+          "Monitor blood pressure daily",
+          "Consider antihypertensive medication",
+          "Reduce sodium intake",
+          "Increase physical activity"
+        ],
+        "borderlinehigh": [
+          "Monitor blood pressure regularly",
+          "Reduce salt intake",
+          "Exercise regularly",
+          "Manage stress levels"
+        ]
+      }
+    }
+  }
+}
