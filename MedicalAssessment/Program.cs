@@ -7,6 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to use different ports
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5003, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+    options.ListenLocalhost(5002);
+});
+
 // Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -35,11 +45,15 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Assessment API v1");
+    c.RoutePrefix = "swagger"; // Serve Swagger UI at /swagger
+});
+
+// Add a redirect from root to swagger
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
