@@ -1,4 +1,4 @@
-﻿namespace MedicalReporting.Tests;
+﻿namespace MedicalAssessment.Tests;
 
 public class UnitTest1
 {

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MedicalReporting\MedicalReporting.csproj" />
+    <ProjectReference Include="..\MedicalAssessment\MedicalAssessment.csproj" />
   </ItemGroup>
 
 </Project>

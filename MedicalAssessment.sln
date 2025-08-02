@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalReporting", "MedicalReporting\MedicalReporting.csproj", "{367938C3-BD78-4707-892B-DEF46B94A670}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalAssessment", "MedicalAssessment\MedicalAssessment.csproj", "{367938C3-BD78-4707-892B-DEF46B94A670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalReporting.Tests", "MedicalReporting.Tests\MedicalReporting.Tests.csproj", "{583BC4BB-C3C9-43CE-B67C-3BF28B4103BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalAssessment.Tests", "MedicalAssessment.Tests\MedicalAssessment.Tests.csproj", "{583BC4BB-C3C9-43CE-B67C-3BF28B4103BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
