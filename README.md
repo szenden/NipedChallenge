@@ -29,17 +29,24 @@ A comprehensive health assessment system that evaluates client health metrics in
 - **Stress Level**: Self-reported stress evaluation from low to high chronic stress
 - **Diet Quality**: Nutritional assessment from balanced nutrient-rich to poor nutrition
 
+## Security Features
+
+- **JWT Authentication**: Bearer token-based authentication system
+- **Input Validation**: Comprehensive validation with detailed error messages
+- **Authorization**: Role-based access control with Admin and User roles
+- **Secure Endpoints**: All endpoints protected with [Authorize] attribute
+
 ## API Endpoints
 
 ### JWT Authentication
-- `POST /api/auth/login` - authenticate
+- `POST /api/auth/login` - Authenticate user and receive JWT token
 
-### Clients
+### Clients (Protected)
 - `POST /api/clients` - Create a new client
 - `GET /api/clients` - Get all clients
 - `GET /api/clients/{id}` - Get client by ID
 
-### Health Assessments
+### Health Assessments (Protected)
 - `POST /api/clients/{id}/assessments` - Create assessment and generate health report
 
 ## Test User Credentials
@@ -71,10 +78,13 @@ Available test users:
 ## Technology Stack
 
 - **.NET 9**: Latest .NET framework
-- **ASP.NET Core**: Web API framework
+- **ASP.NET Core**: Web API framework with JWT authentication
 - **Entity Framework Core**: Data access with In-Memory database
-- **Swagger**: API documentation
+- **System.IdentityModel.Tokens.Jwt**: JWT token generation and validation
+- **Swagger**: API documentation with authentication support
 - **Clean Architecture**: Domain-driven design with separated layers
+- **xUnit**: Unit and integration testing framework
+- **Moq**: Mocking framework for isolated testing
 
 ## Project Structure
 
@@ -85,14 +95,21 @@ MedicalAssessment/
 │   ├── ValueObjects/      # Health metrics value objects
 │   └── Services/          # Domain services
 ├── Application/
-│   ├── DTOs/             # Data transfer objects
+│   ├── DTOs/             # Data transfer objects with validation
 │   ├── Interfaces/       # Service contracts
-│   └── Services/         # Application services
+│   └── Services/         # Application services & JWT service
 ├── Infrastructure/
 │   ├── Data/             # Entity Framework configuration
+│   ├── Filters/          # Input validation filters
 │   └── Repositories/     # Data access implementations
-└── Presentation/
-    └── Controllers/      # API controllers
+├── Presentation/
+│   └── Controllers/      # API controllers with authentication
+└── Tests/
+    ├── Domain/           # Domain layer tests
+    ├── Application/      # Application service tests
+    ├── Infrastructure/   # Infrastructure layer tests
+    ├── Presentation/     # Controller tests
+    └── Integration/      # Authentication integration tests
 ```
 
 ## Getting Started
@@ -118,24 +135,18 @@ MedicalAssessment/
 
 ### Running Tests
 
+
 ```bash
 dotnet test
 ```
 
-## Sample Assessment Request
+Test coverage includes:
+- **Domain Tests**: Value objects, entities, and domain services
+- **Application Tests**: Business logic and service orchestration
+- **Infrastructure Tests**: Data access and validation filters
+- **Controller Tests**: API endpoints with authentication
+- **Integration Tests**: End-to-end authentication pipeline testing
 
-```json
-{
-  "systolicBP": 130,
-  "diastolicBP": 85,
-  "cholesterolTotal": 210,
-  "bloodSugar": 95,
-  "exerciseWeeklyMinutes": 90,
-  "sleepQuality": "6 hours, frequent disturbances",
-  "stressLevel": "Moderate self-reported stress",
-  "dietQuality": "Processed or high-sugar diet"
-}
-```
 
 ## Health Status Categories
 
