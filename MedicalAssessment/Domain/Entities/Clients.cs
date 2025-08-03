@@ -35,9 +35,11 @@ namespace MedicalAssessment.Domain.Entities
             return age;
         }
 
-        public Assessment AddAssessment(BloodPressure bloodPressure, int cholesterolTotal, int bloodSugar)
+        public Assessment AddAssessment(BloodPressure bloodPressure, int cholesterolTotal, int bloodSugar,
+            ExerciseMinutes exerciseMinutes, SleepQuality sleepQuality, StressLevel stressLevel, DietQuality dietQuality)
         {
-            var assessment = new Assessment(Id, bloodPressure, cholesterolTotal, bloodSugar);
+            var assessment = new Assessment(Id, bloodPressure, cholesterolTotal, bloodSugar,
+                exerciseMinutes, sleepQuality, stressLevel, dietQuality);
             _assessments.Add(assessment);
             return assessment;
         }
