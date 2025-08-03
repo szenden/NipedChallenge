@@ -8,7 +8,11 @@ namespace MedicalAssessment.Application.DTOs
         int SystolicBP,
         int DiastolicBP,
         int CholesterolTotal,
-        int BloodSugar
+        int BloodSugar,
+        int ExerciseWeeklyMinutes,
+        string SleepQuality,
+        string StressLevel,
+        string DietQuality
     );
 
     public record ClientResponse(
