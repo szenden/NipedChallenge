@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MedicalAssessment.Application.DTOs;
 using MedicalAssessment.Domain.ValueObjects;
+using MedicalAssessment.Tests.TestHelpers;
 
 namespace MedicalAssessment.Tests.Application.DTOs;
 
@@ -13,7 +14,12 @@ public class DTOTests
     public void CreateClientRequest_ShouldInitializeCorrectly_WithValidData()
     {
         // Arrange & Act
-        var request = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request = new CreateClientRequest
+        {
+            Name = "John Doe",
+            DateOfBirth = new DateTime(1990, 5, 15),
+            Gender = Gender.Male
+        };
 
         // Assert
         Assert.Equal("John Doe", request.Name);
@@ -28,7 +34,7 @@ public class DTOTests
     public void CreateClientRequest_ShouldSupportAllGenderTypes(Gender gender)
     {
         // Arrange & Act
-        var request = new CreateClientRequest("Test User", new DateTime(1990, 1, 1), gender);
+        var request = new CreateClientRequest { Name = "Test User", DateOfBirth = new DateTime(1990, 1, 1), Gender = gender };
 
         // Assert
         Assert.Equal(gender, request.Gender);
@@ -38,7 +44,7 @@ public class DTOTests
     public void CreateClientRequest_ShouldAllowEmptyName()
     {
         // Arrange & Act
-        var request = new CreateClientRequest("", new DateTime(1990, 1, 1), Gender.Male);
+        var request = new CreateClientRequest { Name = "", DateOfBirth = new DateTime(1990, 1, 1), Gender = Gender.Male };
 
         // Assert
         Assert.Equal("", request.Name);
@@ -48,7 +54,7 @@ public class DTOTests
     public void CreateClientRequest_ShouldAllowNullName()
     {
         // Arrange & Act
-        var request = new CreateClientRequest(null!, new DateTime(1990, 1, 1), Gender.Female);
+        var request = new CreateClientRequest { Name = null!, DateOfBirth = new DateTime(1990, 1, 1), Gender = Gender.Female };
 
         // Assert
         Assert.Null(request.Name);
@@ -61,7 +67,7 @@ public class DTOTests
         var futureDate = DateTime.Today.AddYears(1);
 
         // Act
-        var request = new CreateClientRequest("Future Baby", futureDate, Gender.Other);
+        var request = new CreateClientRequest { Name = "Future Baby", DateOfBirth = futureDate, Gender = Gender.Other };
 
         // Assert
         Assert.Equal(futureDate, request.DateOfBirth);
@@ -74,7 +80,7 @@ public class DTOTests
         var veryOldDate = new DateTime(1900, 1, 1);
 
         // Act
-        var request = new CreateClientRequest("Very Old Person", veryOldDate, Gender.Male);
+        var request = new CreateClientRequest { Name = "Very Old Person", DateOfBirth = veryOldDate, Gender = Gender.Male };
 
         // Assert
         Assert.Equal(veryOldDate, request.DateOfBirth);
@@ -84,8 +90,8 @@ public class DTOTests
     public void CreateClientRequest_ShouldBeEquatable_WhenValuesAreSame()
     {
         // Arrange
-        var request1 = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
-        var request2 = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request1 = new CreateClientRequest { Name = "John Doe", DateOfBirth = new DateTime(1990, 5, 15), Gender = Gender.Male };
+        var request2 = new CreateClientRequest { Name = "John Doe", DateOfBirth = new DateTime(1990, 5, 15), Gender = Gender.Male };
 
         // Act & Assert
         Assert.Equal(request1, request2);
@@ -115,12 +121,7 @@ public class DTOTests
     public void CreateAssessmentRequest_ShouldInitializeCorrectly_WithValidData()
     {
         // Arrange & Act
-        var request = new CreateAssessmentRequest(
-            120, 80, 180, 85, 150,
-            "7 hours, restful sleep",
-            "Low self-reported stress",
-            "Balanced, nutrient-rich diet"
-        );
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         // Assert
         Assert.Equal(120, request.SystolicBP);
