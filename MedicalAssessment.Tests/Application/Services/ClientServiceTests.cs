@@ -9,6 +9,7 @@ using MedicalAssessment.Application.Services;
 using MedicalAssessment.Domain.Entities;
 using MedicalAssessment.Domain.Services;
 using MedicalAssessment.Domain.ValueObjects;
+using MedicalAssessment.Tests.TestHelpers;
 
 namespace MedicalAssessment.Tests.Application.Services;
 
@@ -59,7 +60,7 @@ public class ClientServiceTests
     public async Task CreateClientAsync_ShouldCreateClientAndReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var request = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request = TestDataHelper.CreateValidClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
         _mockClientRepository.Setup(r => r.AddAsync(It.IsAny<Client>())).ReturnsAsync((Client client) => client);
 
         // Act
@@ -95,7 +96,7 @@ public class ClientServiceTests
     public async Task CreateClientAsync_ShouldHandleAllGenderTypes(Gender gender)
     {
         // Arrange
-        var request = new CreateClientRequest("Test User", new DateTime(1990, 1, 1), gender);
+        var request = TestDataHelper.CreateValidClientRequest("Test User", new DateTime(1990, 1, 1), gender);
         _mockClientRepository.Setup(r => r.AddAsync(It.IsAny<Client>())).ReturnsAsync((Client client) => client);
 
         // Act
@@ -109,7 +110,7 @@ public class ClientServiceTests
     public async Task CreateClientAsync_ShouldPropagateException_WhenRepositoryThrowsException()
     {
         // Arrange
-        var request = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request = TestDataHelper.CreateValidClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
         _mockClientRepository.Setup(r => r.AddAsync(It.IsAny<Client>()))
             .ThrowsAsync(new InvalidOperationException("Database error"));
 
@@ -277,8 +278,7 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("John Doe", new DateTime(1990, 5, 15), Gender.Male);
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         var healthReport = new HealthReport(
             clientId,
@@ -327,8 +327,7 @@ public class ClientServiceTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         _mockClientRepository.Setup(r => r.GetByIdAsync(clientId)).ReturnsAsync((Client?)null);
 
@@ -348,8 +347,8 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("Test Client", new DateTime(1990, 1, 1), Gender.Male);
-        var request = new CreateAssessmentRequest(140, 90, 240, 126, 50,
-            "4 hours, severe sleep issues", "High chronic stress affecting well-being", "Poor nutrition with deficiencies");
+        var request = TestDataHelper.CreateValidAssessmentRequest(140, 90, 240, 126, 50,
+            "4 hours, severe sleep issues reported", "High chronic stress affecting well-being", "Poor nutrition with deficiencies");
 
         var healthReport = new HealthReport(clientId, "Test Client", DateTime.UtcNow,
             new List<HealthMetric>(), "High Risk", new List<string>());
@@ -380,8 +379,8 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("Test Client", new DateTime(1990, 1, 1), Gender.Male);
-        var request = new CreateAssessmentRequest(systolic, diastolic, cholesterol, bloodSugar, exercise,
-            "Test sleep", "Test stress", "Test diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest(systolic, diastolic, cholesterol, bloodSugar, exercise,
+            "Test sleep quality description", "Test stress level description", "Test diet quality description");
 
         var healthReport = new HealthReport(clientId, "Test Client", DateTime.UtcNow,
             new List<HealthMetric>(), "Test Risk", new List<string>());
@@ -408,8 +407,7 @@ public class ClientServiceTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         _mockClientRepository.Setup(r => r.GetByIdAsync(clientId))
             .ThrowsAsync(new InvalidOperationException("Database error"));
@@ -425,8 +423,7 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("Test Client", new DateTime(1990, 1, 1), Gender.Male);
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         _mockClientRepository.Setup(r => r.GetByIdAsync(clientId)).ReturnsAsync(client);
         _mockClientRepository.Setup(r => r.AddAssessmentAsync(It.IsAny<Assessment>()))
@@ -443,8 +440,7 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("Test Client", new DateTime(1990, 1, 1), Gender.Male);
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
 
         _mockClientRepository.Setup(r => r.GetByIdAsync(clientId)).ReturnsAsync(client);
         _mockClientRepository.Setup(r => r.AddAssessmentAsync(It.IsAny<Assessment>())).Returns(Task.CompletedTask);
@@ -464,7 +460,7 @@ public class ClientServiceTests
     public async Task MapToResponse_ShouldMapClientCorrectly()
     {
         // Arrange
-        var request = new CreateClientRequest("Mapping Test", new DateTime(1985, 3, 10), Gender.Female);
+        var request = TestDataHelper.CreateValidClientRequest("Mapping Test", new DateTime(1985, 3, 10), Gender.Female);
         _mockClientRepository.Setup(r => r.AddAsync(It.IsAny<Client>())).ReturnsAsync((Client client) => client);
 
         // Act
@@ -485,7 +481,7 @@ public class ClientServiceTests
         // Arrange
         var clientId = Guid.NewGuid();
         var client = new Client("Report Test", new DateTime(1990, 1, 1), Gender.Male);
-        var request = new CreateAssessmentRequest(130, 85, 210, 95, 90,
+        var request = TestDataHelper.CreateValidAssessmentRequest(130, 85, 210, 95, 90,
             "6 hours, frequent disturbances", "Moderate self-reported stress", "Processed or high-sugar diet");
 
         var healthMetrics = new List<HealthMetric>
