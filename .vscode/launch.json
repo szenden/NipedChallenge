@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch MedicalAssessment",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/MedicalAssessment/bin/Debug/net9.0/MedicalAssessment.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/MedicalAssessment",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Attach to .NET Core",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}
