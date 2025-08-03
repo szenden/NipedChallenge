@@ -31,6 +31,9 @@ A comprehensive health assessment system that evaluates client health metrics in
 
 ## API Endpoints
 
+### JWT Authentication
+- `POST /api/auth/login` - authenticate
+
 ### Clients
 - `POST /api/clients` - Create a new client
 - `GET /api/clients` - Get all clients
@@ -38,6 +41,32 @@ A comprehensive health assessment system that evaluates client health metrics in
 
 ### Health Assessments
 - `POST /api/clients/{id}/assessments` - Create assessment and generate health report
+
+## Test User Credentials
+Available test users:
+- `admin` / `password` (Admin role)
+- `doctor` / `doctor123` (User role)
+- `user` / `user123` (User role)
+## Using Swagger UI
+1. Go to `https://localhost:5003/swagger`
+2. Get a token first
+   - Click on `/api/Auth/login` endpoint
+   - Click "Try it out"
+   - Enter credentials:
+     ```json
+     {
+       "username": "admin",
+       "password": "password"
+     }
+     ```
+   - Click "Execute"
+   - Copy the token from the response (without quotes)
+
+3. Authorize in Swagger:
+   - Click the **"Authorize"** button (🔒 lock icon) at the top-right of Swagger UI
+   - In the "Bearer" section, enter: `Bearer YOUR_TOKEN_HERE`
+   - Click "Authorize"
+   - Click "Close"
 
 ## Technology Stack
 
