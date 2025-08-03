@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using Moq;
 using MedicalAssessment.API.Controllers;
 using MedicalAssessment.Application.DTOs;
 using MedicalAssessment.Application.Interfaces;
 using MedicalAssessment.Domain.ValueObjects;
+using MedicalAssessment.Tests.TestHelpers;
 
 namespace MedicalAssessment.Tests.Presentation.Controllers;
 
@@ -19,6 +22,29 @@ public class ClientsControllerTests
     {
         _mockClientService = new Mock<IClientService>();
         _controller = new ClientsController(_mockClientService.Object);
+        SetupAuthenticatedUser();
+    }
+
+    private void SetupAuthenticatedUser()
+    {
+        var claims = new List<Claim>
+        {
+            new Claim("userId", "test-user"),
+            new Claim("role", "User"),
+            new Claim(ClaimTypes.NameIdentifier, "test-user")
+        };
+        var identity = new ClaimsIdentity(claims, "Bearer");
+        var principal = new ClaimsPrincipal(identity);
+        
+        var httpContext = new DefaultHttpContext
+        {
+            User = principal
+        };
+        
+        _controller.ControllerContext = new ControllerContext
+        {
+            HttpContext = httpContext
+        };
     }
 
     #region GetAllClients Tests
@@ -147,7 +173,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ShouldReturnCreatedAtAction_WhenClientIsCreatedSuccessfully()
     {
         // Arrange
-        var request = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request = TestDataHelper.CreateValidClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
         var createdClient = new ClientResponse(Guid.NewGuid(), "John Doe", new DateTime(1990, 5, 15), Gender.Male, 34, 0);
         _mockClientService.Setup(s => s.CreateClientAsync(request)).ReturnsAsync(createdClient);
 
@@ -245,8 +271,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150, 
-            "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
+        var request = TestDataHelper.CreateValidAssessmentRequest();
         
         var healthReport = new HealthReportResponse(
             clientId, 
@@ -431,7 +456,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ShouldPropagateException_WhenServiceThrowsNonArgumentException()
     {
         // Arrange
-        var request = new CreateClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
+        var request = TestDataHelper.CreateValidClientRequest("John Doe", new DateTime(1990, 5, 15), Gender.Male);
         _mockClientService.Setup(s => s.CreateClientAsync(request))
             .ThrowsAsync(new InvalidOperationException("Database error"));
 
