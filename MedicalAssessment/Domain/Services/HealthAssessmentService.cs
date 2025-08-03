@@ -13,7 +13,11 @@ namespace MedicalAssessment.Domain.Services
             {
                 EvaluateBloodPressureMetric(assessment.BloodPressure),
                 EvaluateCholesterolMetric(assessment.CholesterolTotal),
-                EvaluateBloodSugarMetric(assessment.BloodSugar)
+                EvaluateBloodSugarMetric(assessment.BloodSugar),
+                EvaluateExerciseMinutesMetric(assessment.ExerciseMinutes),
+                EvaluateSleepQualityMetric(assessment.SleepQuality),
+                EvaluateStressLevelMetric(assessment.StressLevel),
+                EvaluateDietQualityMetric(assessment.DietQuality)
             };
 
             var overallRisk = CalculateOverallRisk(metrics);
@@ -110,6 +114,62 @@ namespace MedicalAssessment.Domain.Services
                 0 when attentionCount == 1 => "Low Risk",
                 _ => "Low Risk"
             };
+        }
+
+        private HealthMetric EvaluateExerciseMinutesMetric(ExerciseMinutes exerciseMinutes)
+        {
+            var status = exerciseMinutes.GetHealthStatus();
+            var recommendation = status switch
+            {
+                HealthStatus.Optimal => "Great job maintaining regular exercise!",
+                HealthStatus.NeedsAttention => "Increase weekly exercise to at least 150 minutes",
+                HealthStatus.SeriousIssue => "Start with light exercise and gradually increase activity",
+                _ => "Unknown"
+            };
+            
+            return new HealthMetric("Exercise Minutes", exerciseMinutes.WeeklyMinutes, status, recommendation);
+        }
+
+        private HealthMetric EvaluateSleepQualityMetric(SleepQuality sleepQuality)
+        {
+            var status = sleepQuality.GetHealthStatus();
+            var recommendation = status switch
+            {
+                HealthStatus.Optimal => "Maintain good sleep hygiene practices",
+                HealthStatus.NeedsAttention => "Improve sleep environment and establish bedtime routine",
+                HealthStatus.SeriousIssue => "Consult physician about sleep disorders",
+                _ => "Unknown"
+            };
+            
+            return new HealthMetric("Sleep Quality", 0, status, recommendation);
+        }
+
+        private HealthMetric EvaluateStressLevelMetric(StressLevel stressLevel)
+        {
+            var status = stressLevel.GetHealthStatus();
+            var recommendation = status switch
+            {
+                HealthStatus.Optimal => "Continue current stress management practices",
+                HealthStatus.NeedsAttention => "Consider stress reduction techniques like meditation",
+                HealthStatus.SeriousIssue => "Seek professional help for stress management",
+                _ => "Unknown"
+            };
+            
+            return new HealthMetric("Stress Level", 0, status, recommendation);
+        }
+
+        private HealthMetric EvaluateDietQualityMetric(DietQuality dietQuality)
+        {
+            var status = dietQuality.GetHealthStatus();
+            var recommendation = status switch
+            {
+                HealthStatus.Optimal => "Continue balanced, nutrient-rich diet",
+                HealthStatus.NeedsAttention => "Reduce processed foods and added sugars",
+                HealthStatus.SeriousIssue => "Consult nutritionist for comprehensive diet plan",
+                _ => "Unknown"
+            };
+            
+            return new HealthMetric("Diet Quality", 0, status, recommendation);
         }
 
         private List<string> GenerateRecommendations(List<HealthMetric> metrics)
