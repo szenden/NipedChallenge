@@ -41,6 +41,26 @@ namespace MedicalAssessment.Infrastructure.Data
                     bp.Property(p => p.Systolic).HasColumnName("SystolicBP").IsRequired();
                     bp.Property(p => p.Diastolic).HasColumnName("DiastolicBP").IsRequired();
                 });
+                
+                entity.OwnsOne(e => e.ExerciseMinutes, em =>
+                {
+                    em.Property(p => p.WeeklyMinutes).HasColumnName("ExerciseWeeklyMinutes").IsRequired();
+                });
+                
+                entity.OwnsOne(e => e.SleepQuality, sq =>
+                {
+                    sq.Property(p => p.Description).HasColumnName("SleepQuality").HasMaxLength(500).IsRequired();
+                });
+                
+                entity.OwnsOne(e => e.StressLevel, sl =>
+                {
+                    sl.Property(p => p.Assessment).HasColumnName("StressLevel").HasMaxLength(500).IsRequired();
+                });
+                
+                entity.OwnsOne(e => e.DietQuality, dq =>
+                {
+                    dq.Property(p => p.Assessment).HasColumnName("DietQuality").HasMaxLength(500).IsRequired();
+                });
             });
         }
     }
