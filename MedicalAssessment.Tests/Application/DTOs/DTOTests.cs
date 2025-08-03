@@ -442,14 +442,18 @@ public class DTOTests
     public void DTOs_ShouldWorkTogether_InTypicalWorkflow()
     {
         // Arrange - Create client request
-        var createClientRequest = new CreateClientRequest("Integration Test", new DateTime(1990, 1, 1), Gender.Male);
+        var createClientRequest = TestDataHelper.CreateValidClientRequest("Integration Test", new DateTime(1990, 1, 1), Gender.Male);
 
         // Arrange - Create assessment request
-        var createAssessmentRequest = new CreateAssessmentRequest(
-            120, 80, 180, 85, 150,
-            "7 hours, restful sleep",
-            "Low self-reported stress",
-            "Balanced, nutrient-rich diet"
+        var createAssessmentRequest = TestDataHelper.CreateValidAssessmentRequest(
+            systolicBP: 120, 
+            diastolicBP: 80, 
+            cholesterolTotal: 180, 
+            bloodSugar: 85, 
+            exerciseWeeklyMinutes: 150,
+            sleepQuality: "7 hours, restful sleep",
+            stressLevel: "Low self-reported stress",
+            dietQuality: "Balanced, nutrient-rich diet"
         );
 
         // Arrange - Create expected responses
@@ -483,13 +487,15 @@ public class DTOTests
     public void DTOs_ShouldHandleComplexScenarios_WithAllNewHealthFactors()
     {
         // Arrange - Assessment with all new health factors in various states
-        var assessmentRequest = new CreateAssessmentRequest(
-            140, 90,  // High blood pressure
-            240, 126, // High cholesterol and blood sugar
-            50,       // Low exercise
-            "4 hours, severe sleep issues",                    // Poor sleep
-            "High chronic stress affecting well-being",       // High stress
-            "Poor nutrition with deficiencies"                // Poor diet
+        var assessmentRequest = TestDataHelper.CreateValidAssessmentRequest(
+            systolicBP: 140, 
+            diastolicBP: 90,  // High blood pressure
+            cholesterolTotal: 240, 
+            bloodSugar: 126, // High cholesterol and blood sugar
+            exerciseWeeklyMinutes: 50,       // Low exercise
+            sleepQuality: "4 hours, severe sleep issues",                    // Poor sleep
+            stressLevel: "High chronic stress affecting well-being",       // High stress
+            dietQuality: "Poor nutrition with deficiencies"                // Poor diet
         );
 
         var healthMetrics = new List<HealthMetricResponse>

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -13,6 +14,7 @@ using MedicalAssessment.Application.Interfaces;
 using MedicalAssessment.Application.Services;
 using MedicalAssessment.Infrastructure.Data;
 using MedicalAssessment.Infrastructure.Filters;
+using MedicalAssessment.API.Controllers;
 using MedicalAssessment.Presentation.Controllers;
 using MedicalAssessment.Tests.TestHelpers;
 using System.Security.Claims;
@@ -31,7 +33,7 @@ public class AuthenticationIntegrationTests
     {
         // Arrange
         var jwtService = new JwtService();
-        var authController = new AuthController(jwtService);
+        var authController = new MedicalAssessment.Presentation.Controllers.AuthController(jwtService);
 
         // Act 1: Login to get token
         var loginRequest = new LoginRequest("admin", "password");
@@ -95,7 +97,7 @@ public class AuthenticationIntegrationTests
     {
         // Arrange
         var jwtService = new JwtService();
-        var authController = new AuthController(jwtService);
+        var authController = new MedicalAssessment.Presentation.Controllers.AuthController(jwtService);
 
         // Test different user types
         var testCases = new[]
@@ -138,7 +140,7 @@ public class AuthenticationIntegrationTests
         var mockClientService = new Mock<IClientService>();
         var expectedClients = new List<ClientResponse>
         {
-            new ClientResponse(Guid.NewGuid(), "Test Client", DateTime.Now, Domain.ValueObjects.Gender.Male, 30, 1)
+            new ClientResponse(Guid.NewGuid(), "Test Client", DateTime.Now, MedicalAssessment.Domain.ValueObjects.Gender.Male, 30, 1)
         };
         
         mockClientService.Setup(x => x.GetAllClientsAsync()).ReturnsAsync(expectedClients);

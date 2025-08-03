@@ -196,7 +196,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ShouldReturnBadRequest_WhenArgumentExceptionIsThrown()
     {
         // Arrange
-        var request = new CreateClientRequest("", new DateTime(1990, 5, 15), Gender.Male);
+        var request = TestDataHelper.CreateInvalidClientRequest("", new DateTime(1990, 5, 15), Gender.Male);
         var exceptionMessage = "Name cannot be empty";
         _mockClientService.Setup(s => s.CreateClientAsync(request))
             .ThrowsAsync(new ArgumentException(exceptionMessage));
@@ -213,7 +213,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ShouldCallServiceWithCorrectRequest()
     {
         // Arrange
-        var request = new CreateClientRequest("Jane Smith", new DateTime(1985, 8, 22), Gender.Female);
+        var request = TestDataHelper.CreateValidClientRequest("Jane Smith", new DateTime(1985, 8, 22), Gender.Female);
         var createdClient = new ClientResponse(Guid.NewGuid(), "Jane Smith", new DateTime(1985, 8, 22), Gender.Female, 39, 0);
         _mockClientService.Setup(s => s.CreateClientAsync(request)).ReturnsAsync(createdClient);
 
@@ -231,7 +231,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ShouldHandleAllGenderTypes(Gender gender)
     {
         // Arrange
-        var request = new CreateClientRequest("Test User", new DateTime(1990, 1, 1), gender);
+        var request = TestDataHelper.CreateValidClientRequest("Test User", new DateTime(1990, 1, 1), gender);
         var createdClient = new ClientResponse(Guid.NewGuid(), "Test User", new DateTime(1990, 1, 1), gender, 35, 0);
         _mockClientService.Setup(s => s.CreateClientAsync(request)).ReturnsAsync(createdClient);
 
@@ -249,7 +249,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var futureDate = DateTime.Today.AddYears(1);
-        var request = new CreateClientRequest("Future Baby", futureDate, Gender.Other);
+        var request = TestDataHelper.CreateValidClientRequest("Future Baby", futureDate, Gender.Other);
         var createdClient = new ClientResponse(Guid.NewGuid(), "Future Baby", futureDate, Gender.Other, -1, 0);
         _mockClientService.Setup(s => s.CreateClientAsync(request)).ReturnsAsync(createdClient);
 
@@ -306,7 +306,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
+        var request = TestDataHelper.CreateValidAssessmentRequest(120, 80, 180, 85, 150,
             "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
 
         _mockClientService.Setup(s => s.CreateAssessmentAndGenerateReportAsync(clientId, request))
@@ -324,7 +324,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, -10,
+        var request = TestDataHelper.CreateValidAssessmentRequest(120, 80, 180, 85, -10,
             "Invalid sleep", "Invalid stress", "Invalid diet");
         var exceptionMessage = "Invalid assessment data";
 
@@ -344,7 +344,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(140, 90, 240, 126, 50,
+        var request = TestDataHelper.CreateValidAssessmentRequest(140, 90, 240, 126, 50,
             "4 hours, severe sleep issues", "High chronic stress affecting well-being", "Poor nutrition with deficiencies");
 
         _mockClientService.Setup(s => s.CreateAssessmentAndGenerateReportAsync(clientId, request))
@@ -365,7 +365,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(systolic, diastolic, cholesterol, bloodSugar, exercise,
+        var request = TestDataHelper.CreateValidAssessmentRequest(systolic, diastolic, cholesterol, bloodSugar, exercise,
             "Test sleep", "Test stress", "Test diet");
 
         var healthReport = new HealthReportResponse(clientId, "Test Client", DateTime.UtcNow,
@@ -390,7 +390,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
+        var request = TestDataHelper.CreateValidAssessmentRequest(120, 80, 180, 85, 150,
             testString, testString, testString);
 
         var healthReport = new HealthReportResponse(clientId, "Test Client", DateTime.UtcNow,
@@ -411,7 +411,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.Empty;
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
+        var request = TestDataHelper.CreateValidAssessmentRequest(120, 80, 180, 85, 150,
             "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
 
         _mockClientService.Setup(s => s.CreateAssessmentAndGenerateReportAsync(clientId, request))
@@ -469,7 +469,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(120, 80, 180, 85, 150,
+        var request = TestDataHelper.CreateValidAssessmentRequest(120, 80, 180, 85, 150,
             "7 hours, restful sleep", "Low self-reported stress", "Balanced, nutrient-rich diet");
         
         _mockClientService.Setup(s => s.CreateAssessmentAndGenerateReportAsync(clientId, request))
@@ -487,7 +487,7 @@ public class ClientsControllerTests
     public async Task CreateClient_ThenGetClient_ShouldReturnSameClient()
     {
         // Arrange
-        var request = new CreateClientRequest("Integration Test", new DateTime(1990, 1, 1), Gender.Male);
+        var request = TestDataHelper.CreateValidClientRequest("Integration Test", new DateTime(1990, 1, 1), Gender.Male);
         var createdClient = new ClientResponse(Guid.NewGuid(), "Integration Test", new DateTime(1990, 1, 1), Gender.Male, 35, 0);
         
         _mockClientService.Setup(s => s.CreateClientAsync(request)).ReturnsAsync(createdClient);
@@ -513,7 +513,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(
+        var request = TestDataHelper.CreateValidAssessmentRequest(
             125, // systolicBP
             85,  // diastolicBP
             220, // cholesterolTotal
@@ -599,7 +599,7 @@ public class ClientsControllerTests
     {
         // Arrange
         var clientId = Guid.NewGuid();
-        var request = new CreateAssessmentRequest(
+        var request = TestDataHelper.CreateValidAssessmentRequest(
             int.MaxValue,  // systolicBP
             int.MinValue,  // diastolicBP
             0,             // cholesterolTotal
