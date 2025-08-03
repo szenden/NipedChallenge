@@ -14,7 +14,7 @@ namespace MedicalAssessment.Domain.Entities
         public ExerciseMinutes ExerciseMinutes { get; private set; }
         public SleepQuality SleepQuality { get; private set; }
         public StressLevel StressLevel { get; private set; }
-        public DietQuality DietQuality { get; private set; }
+        public DietQuality DietQuality { get; private set; } = null!;
 
         private Assessment() { } // EF Core
 
